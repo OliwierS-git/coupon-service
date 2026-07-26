@@ -1,6 +1,5 @@
 package pl.java.couponService.usage;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,12 @@ public class CouponUsageService {
 
         log.info("Coupon {} used by user {}", normalizedCode, request.getUserId());
 
+        // usagesLeftAfter jest liczone z obiektu `coupon` pobranego
+        // przed inkrementacja w DB, wiec przy wspolbieznosci moze byc niespojne.
+        // Propozycje rozwiazania:
+        // 1) po inkrementacji odczytac aktualny stan kuponu z DB i z niego liczyc wynik,
+        // 2) albo przeniesc update do SQL z RETURNING current_usages i zwracac wartosc z DB,
+        // 3) dodac test rownolegly (wielowatkowy) weryfikujacy poprawne usagesLeftAfter.
         int usagesLeftAfter = coupon.getMaxUsages() - (coupon.getCurrentUsages() + 1);
 
         return CouponUsageResponse.from(savedUsage, usagesLeftAfter);

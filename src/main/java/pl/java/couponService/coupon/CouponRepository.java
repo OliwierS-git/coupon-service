@@ -11,6 +11,11 @@ import java.util.UUID;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, UUID> {
 
+    // To wyszukiwanie jest case-sensitive po stronie DB.
+    // Działa tylko dlatego, że logika aplikacji normalizuje kod do UPPERCASE.
+    // Brak gwarancji case-insensitive na poziomie bazy.
+    // Propozycja: unikalnosc i lookup opierac na LOWER(code) (np. indeks funkcjonalny),
+    // albo uzyc typu CITEXT i przejsc na findByCodeIgnoreCase.
     Optional<Coupon> findByCode(String code);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
