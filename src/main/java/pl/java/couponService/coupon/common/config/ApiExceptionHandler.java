@@ -56,6 +56,10 @@ public class ApiExceptionHandler {
     }
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiInfo> handleDataIntegrityViolation(HttpServletRequest req, DataIntegrityViolationException e) {
+        // Każde naruszenie integralności jest mapowane na
+        // "Coupon code already exists", co maskuje inne błędy danych.
+        // Propozycja: rozróżnić naruszenia po nazwie constraintu i zwracać
+        // dedykowany komunikat/kod dla każdego scenariusza.
         ApiInfo apiInfo = new ApiInfo(HttpStatus.CONFLICT, "Coupon code already exists", LocalDateTime.now());
         return new ResponseEntity<>(apiInfo, HttpStatus.CONFLICT);
     }

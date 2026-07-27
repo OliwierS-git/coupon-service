@@ -2,6 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- repo ma mvnw/mvnw.cmd, ale brakuje .mvn/wrapper,
+         więc build "out of the box" nie działa na czystej maszynie.
+         Propozycja: dołączyć katalog .mvn/wrapper (maven-wrapper.properties + jar). -->
+    <!--  do repo trafiły artefakty builda (target/**).
+         Propozycja: dodać .gitignore i usunąć target/** z commitów zadania. -->
 
     <modelVersion>4.0.0</modelVersion>
 

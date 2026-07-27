@@ -8,6 +8,10 @@ CREATE TABLE coupons.coupon (
                                 current_usages  INTEGER     NOT NULL DEFAULT 0,
                                 created_at      TIMESTAMP   NOT NULL,
                                 version         BIGINT      NOT NULL DEFAULT 0,
+                                -- Brak CHECK-ów (np. max_usages > 0,
+                                -- current_usages >= 0, current_usages <= max_usages).
+                                -- Propozycja: dodac CHECK-i na tych kolumnach, zeby
+                                -- integralnosc byla chroniona takze po stronie DB.
                                 CONSTRAINT uk_coupon_code UNIQUE (code)
 );
 

@@ -23,6 +23,8 @@ import java.util.UUID;
         }
 )
 public class Coupon {
+    //  Globalne @Setter na encji obniża kontrolę nad zmianami stanu.
+    // Propozycja: usunac @Setter z klasy i zostawic mutacje tylko przez metody.
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -70,6 +72,9 @@ public class Coupon {
 
     public void incrementUsage() {
         if (!hasUsagesLeft()) {
+            // REVIEW (rekrutacja): Semantycznie to powinien byc CouponExhaustedException.
+            // Propozycja: rzucac CouponExhaustedException i zachowac CouponAlreadyUsedException
+            // tylko dla konfliktu (coupon_id, user_id) konkretnego uzytkownika.
             throw new CouponAlreadyUsedException("Coupon " + code + " has no usages left");
         }
         currentUsages++;

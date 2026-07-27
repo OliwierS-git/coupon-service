@@ -36,6 +36,11 @@ class CouponMapperTest {
 
     @Test
     void badPath_toEntity_invalidCountryCode_throws() {
+        // To nie jest bad path.
+        // Request używa poprawnego enumu Country.PL i niczego nie rzuca.
+        // Taki test daje fałszywe poczucie pokrycia scenariusza błędnego.
+        // Propozycja: albo usunac ten test, albo zastapic go testem walidacji requestu
+        // (np. blank code, null maxUsages) na poziomie kontrolera.
         var request = new CouponCreateRequest("CODE123", Country.PL, 10);
 
         Coupon result = mapper.toEntity(request);

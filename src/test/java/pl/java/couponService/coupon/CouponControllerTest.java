@@ -81,6 +81,9 @@ class CouponControllerTest {
     void happyPath_useCoupon_returns201() throws Exception {
         var request = new CouponUsageRequest(UUID.randomUUID());
         when(clientIpResolver.resolve(any(HttpServletRequest.class))).thenReturn("8.8.8.8");
+        // Test przepuszcza null jako response z serwisu.
+        // To nie weryfikuje kontraktu odpowiedzi endpointu i może ukryć regresje serializacji.
+        // Propozycja: zwrocic realny CouponUsageResponse i asercjami sprawdzic payload JSON.
         when(couponUsageService.useCoupon(anyString(), any(), anyString())).thenReturn(null);
         mockMvc.perform(post("/api/v1/coupons/SPRING2026/usages")
                         .contentType(MediaType.APPLICATION_JSON)
